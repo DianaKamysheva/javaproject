@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Reader</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Edit Reader</h1>
+<form th:action="@{/readers/edit/{id}(id=${reader.readerid})}" th:object="${reader}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}"/>
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" th:field="*{surname}"/>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
