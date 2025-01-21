@@ -16,12 +16,12 @@
     </tr>
     <tr th:each="book : ${books}">
         <td th:text="${book.id}"></td>
-        <td th:text="${book.author}"></td>
+        <td th:text="${book.authorid}"></td>
         <td th:text="${book.title}"></td>
-        <td th:text="${book.genre}"></td>
+        <td th:text="${book.genreid}"></td>
         <td>
             <a th:href="@{/books/edit_book/{id}(id=${book.id})}">Edit</a>
-            <a th:href="@{/books/delete/{id}(id=${book.id})}">Delete</a>
+            <a th:href="@{/books/delete_book/{id}(id=${book.id})}">Delete</a>
         </td>
     </tr>
 </table>

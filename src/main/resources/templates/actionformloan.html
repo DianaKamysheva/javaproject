@@ -22,8 +22,8 @@
         <td th:text="${loan.loandate}"></td>
         <td th:text="${loan.returnedate}"></td>
         <td>
-            <a th:href="@{/loans/edit/{id}(id=${loan.id})}">Edit</a>
-            <a th:href="@{/loans/delete/{id}(id=${loan.id})}">Delete</a>
+            <a th:href="@{/loans/edit_loan/{id}(id=${loan.id})}">Edit</a>
+            <a th:href="@{/loans/delete_loan/{id}(id=${loan.id})}">Delete</a>
         </td>
     </tr>
 </table>

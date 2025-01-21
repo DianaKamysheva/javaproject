@@ -57,6 +57,11 @@ public class helpmeController {
 
     @GetMapping("/authors")
     public String AuthorAction(Model model) {
+        List<Author> authors = authorRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Author::getId))
+                .toList();
+        model.addAttribute("authors", authors);
         return "actionformauthor";
     }
 
@@ -81,7 +86,7 @@ public class helpmeController {
         Author author = authorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid author Id:" + id));
         model.addAttribute("author", author);
         model.addAttribute("typeaction", typeaction);
-        return "actionformauthor";
+        return "edit_author";
     }
 
     @PostMapping("/authors/edit_author/{id}")
@@ -97,8 +102,59 @@ public class helpmeController {
         return "redirect:/authors";
     }
 
+    @GetMapping("/books")
+    public String BookAction(Model model) {
+        List<Book> books = bookRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Book::getId))
+                .toList();
+        model.addAttribute("books", books);
+        return "actionformbook";
+    }
+
+    @GetMapping("/books/add_book")
+    public String AddBookAction(Model model) {
+        String typeaction = "add";
+        model.addAttribute("book", new Book());
+        model.addAttribute("typeaction", typeaction);
+        return "add_book";
+    }
+
+    @PostMapping("/books/add_book")
+    public String AddBookAction(@Valid @ModelAttribute Book book) {
+        bookRepository.save(book);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/books/edit_book/{id}")
+    public String EditBookAction(@PathVariable Integer id, Model model) {
+        String typeaction = "edit";
+        Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+        model.addAttribute("book", book);
+        model.addAttribute("typeaction", typeaction);
+        return "edit_book";
+    }
+
+    @PostMapping("/books/edit_book/{id}")
+    public String EditBookAction(@PathVariable Integer id, @ModelAttribute Book book) {
+        book.setId(id);
+        bookRepository.save(book);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/books/delete_book/{id}")
+    public String DeleteBookAction(@PathVariable Integer id) {
+        bookRepository.deleteById(id);
+        return "redirect:/books";
+    }
+
     @GetMapping("/genres")
     public String GenreAction(Model model) {
+        List<Genre> genres = genreRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Genre::getId))
+                .toList();
+        model.addAttribute("genres", genres);
         return "actionformgenre";
     }
 
@@ -122,7 +178,7 @@ public class helpmeController {
         Genre genre = genreRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid genre Id:" + id));
         model.addAttribute("genre", genre);
         model.addAttribute("typeaction", typeaction);
-        return "actionformgenre";
+        return "edit_genre";
     }
 
     @PostMapping("/genres/edit_genre/{id}")
@@ -138,8 +194,59 @@ public class helpmeController {
         return "redirect:/genres";
     }
 
+    @GetMapping("/loans")
+    public String LoanAction(Model model) {
+        List<Loan> loans = loanRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Loan::getId))
+                .toList();
+        model.addAttribute("loans", loans);
+        return "actionformloan";
+    }
+
+    @GetMapping("/loans/add_loan")
+    public String AddLoanAction(Model model) {
+        String typeaction = "add";
+        model.addAttribute("loan", new Loan());
+        model.addAttribute("typeaction", typeaction);
+        return "add_loan";
+    }
+
+    @PostMapping("/loans/add_loan")
+    public String AddLoanAction(@Valid @ModelAttribute Loan loan) {
+        loanRepository.save(loan);
+        return "redirect:/loans";
+    }
+
+    @GetMapping("/loans/edit_loan/{id}")
+    public String EditLoanAction(@PathVariable Integer id, Model model) {
+        String typeaction = "edit";
+        Loan loan = loanRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid loan Id:" + id));
+        model.addAttribute("loan", loan);
+        model.addAttribute("typeaction", typeaction);
+        return "edit_loan";
+    }
+
+    @PostMapping("/loans/edit_loan/{id}")
+    public String EditLoanAction(@PathVariable Integer id, @ModelAttribute Loan loan) {
+        loan.setId(id);
+        loanRepository.save(loan);
+        return "redirect:/loans";
+    }
+
+    @GetMapping("/loans/delete_loan/{id}")
+    public String DeleteLoanAction(@PathVariable Integer id) {
+        loanRepository.deleteById(id);
+        return "redirect:/loans";
+    }
+
     @GetMapping("/readers")
     public String ReaderAction(Model model) {
+        List<Reader> readers = readerRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Reader::getId))
+                .toList();
+        model.addAttribute("readers", readers);
         return "actionformreader";
     }
 
@@ -164,7 +271,7 @@ public class helpmeController {
         Reader reader = readerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid reader Id:" + id));
         model.addAttribute("reader", reader);
         model.addAttribute("typeaction", typeaction);
-        return "actionformreader";
+        return "edit_reader";
     }
 
     @PostMapping("/readers/edit_reader/{id}")
@@ -180,86 +287,5 @@ public class helpmeController {
         return "redirect:/readers";
     }
 
-    @GetMapping("/loans")
-    public String LoanAction(Model model) {
-        return "actionformloan";
-    }
-
-    @GetMapping("/loans/add_loan")
-    public String AddLoanAction(Model model) {
-        String typeaction = "add";
-        model.addAttribute("loan", new Loan());
-        model.addAttribute("typeaction", typeaction);
-        return "add_loan";
-    }
-
-    @PostMapping("/loans/add_loan")
-    public String AddLoanAction(@Valid @ModelAttribute Loan loan) {
-        loanRepository.save(loan);
-        return "redirect:/loans";
-    }
-
-    @GetMapping("/loans/edit_loan/{id}")
-    public String EditLoanAction(@PathVariable Integer id, Model model) {
-        String typeaction = "edit";
-        Loan loan = loanRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid loan Id:" + id));
-        model.addAttribute("loan", loan);
-        model.addAttribute("typeaction", typeaction);
-        return "actionformloan";
-    }
-
-    @PostMapping("/loans/edit_loan/{id}")
-    public String EditLoanAction(@PathVariable Integer id, @ModelAttribute Loan loan) {
-        loan.setId(id);
-        loanRepository.save(loan);
-        return "redirect:/loans";
-    }
-
-    @GetMapping("/loans/delete_loan/{id}")
-    public String DeleteLoanAction(@PathVariable Integer id) {
-        loanRepository.deleteById(id);
-        return "redirect:/loans";
-    }
-
-    @GetMapping("/books")
-    public String BookAction(Model model) {
-        return "actionformbook";
-    }
-
-    @GetMapping("/books/add_book")
-    public String AddBookAction(Model model) {
-        String typeaction = "add";
-        model.addAttribute("book", new Book());
-        model.addAttribute("typeaction", typeaction);
-        return "add_book";
-    }
-
-    @PostMapping("/books/add_book")
-    public String AddBookAction(@Valid @ModelAttribute Book book) {
-        bookRepository.save(book);
-        return "redirect:/books";
-    }
-
-    @GetMapping("/books/edit_book/{id}")
-    public String EditBookAction(@PathVariable Integer id, Model model) {
-        String typeaction = "edit";
-        Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
-        model.addAttribute("book", book);
-        model.addAttribute("typeaction", typeaction);
-        return "actionformbook";
-    }
-
-    @PostMapping("/books/edit_book/{id}")
-    public String EditBookAction(@PathVariable Integer id, @ModelAttribute Book book) {
-        book.setId(id);
-        bookRepository.save(book);
-        return "redirect:/books";
-    }
-
-    @GetMapping("/books/delete_book/{id}")
-    public String DeleteBookAction(@PathVariable Integer id) {
-        bookRepository.deleteById(id);
-        return "redirect:/books";
-    }
 }
 
