@@ -91,7 +91,7 @@ public class helpmeController {
         return "redirect:/authors";
     }
 
-    @GetMapping("/author/delete{id}")
+    @GetMapping("/authors/delete_author/{id}")
     public String DeleteAuthorAction(@PathVariable Integer id) {
         authorRepository.deleteById(id);
         return "redirect:/authors";
@@ -132,7 +132,7 @@ public class helpmeController {
         return "redirect:/genres";
     }
 
-    @GetMapping("/genres/delete/{id}")
+    @GetMapping("/genres/delete_genre/{id}")
     public String DeleteGenreAction(@PathVariable Integer id) {
         genreRepository.deleteById(id);
         return "redirect:/genres";
@@ -215,7 +215,7 @@ public class helpmeController {
         return "redirect:/loans";
     }
 
-    @GetMapping("/loans/delete/{id}")
+    @GetMapping("/loans/delete_loan/{id}")
     public String DeleteLoanAction(@PathVariable Integer id) {
         loanRepository.deleteById(id);
         return "redirect:/loans";
@@ -256,7 +256,7 @@ public class helpmeController {
         return "redirect:/books";
     }
 
-    @GetMapping("/books/delete/{id}")
+    @GetMapping("/books/delete_book/{id}")
     public String DeleteBookAction(@PathVariable Integer id) {
         bookRepository.deleteById(id);
         return "redirect:/books";
